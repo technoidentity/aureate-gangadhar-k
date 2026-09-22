@@ -1,1 +1,10 @@
+HEAD
 main
+=======
+/sum
+/sum.exe
+/target/
+/rust-run.sh
+/.agents/
+/.codex/
+945a286 (Add Rust program to sum two user inputs)
