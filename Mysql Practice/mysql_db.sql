@@ -1,14 +1,10 @@
-/*markdown
-# MySQL Online Store Notebook
-
-This notebook creates the onlinestore schema and lets you run SQL queries with output shown directly below each cell.
-*/
+-- Original Online Store data from Grokking Relational Database Design.
+-- Preserve existing rows; practice changes belong in onlinestore_practice.
 
 CREATE DATABASE IF NOT EXISTS onlinestore;
 USE onlinestore;
 
-DROP TABLE IF EXISTS product;
-CREATE TABLE product (
+CREATE TABLE IF NOT EXISTS product (
     product_id INT PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -16,7 +12,7 @@ CREATE TABLE product (
     manufacturer TEXT NOT NULL
 );
 
-INSERT INTO product (
+INSERT IGNORE INTO product (
     product_id,
     name,
     description,
@@ -34,20 +30,3 @@ VALUES
     (8, 'The Sonic Screwdriver', 'A versatile tool capable of performing a wide variety of tasks, from unlocking doors to repairing electronics.', 15.1, 'Absurd Accessories'),
     (9, 'The Infinite Improbability Generator', 'A device that can create impossible and absurd events, such as a spaceship suddenly turning into a giant sperm whale.', 9.99, 'Silly Supplies Co.'),
     (10, 'The Neuralyzer', 'A flashy device that erases people''s memories of specific events or encounters.', 33.55, 'Silly Supplies Co.');
-
-USE onlinestore;
-SELECT * FROM product ORDER BY product_id;
-
-USE onlinestore;
-SELECT product_id, name, price
-FROM product
-ORDER BY price DESC;
-
-USE onlinestore;
-SELECT COUNT(*) AS total_products FROM product;
-
-USE onlinestore;
-SELECT name, manufacturer, price
-FROM product
-WHERE price > 20
-ORDER BY price DESC;
