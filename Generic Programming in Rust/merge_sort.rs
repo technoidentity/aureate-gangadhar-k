@@ -1,6 +1,6 @@
 use std::io;
 
-fn merge_sort(numbers: &mut [i32]) {
+fn merge_sort<T: Ord + Clone>(numbers: &mut [T]) {
     let n = numbers.len();
 
     if n <= 1 {
@@ -21,10 +21,10 @@ fn merge_sort(numbers: &mut [i32]) {
 
     while i < left.len() && j < right.len() {
         if left[i] <= right[j] {
-            numbers[k] = left[i];
+            numbers[k] = left[i].clone();
             i += 1;
         } else {
-            numbers[k] = right[j];
+            numbers[k] = right[j].clone();
             j += 1;
         }
 
@@ -32,13 +32,13 @@ fn merge_sort(numbers: &mut [i32]) {
     }
 
     while i < left.len() {
-        numbers[k] = left[i];
+        numbers[k] = left[i].clone();
         i += 1;
         k += 1;
     }
 
     while j < right.len() {
-        numbers[k] = right[j];
+        numbers[k] = right[j].clone();
         j += 1;
         k += 1;
     }

@@ -1,14 +1,18 @@
 use std::io;
 
-fn bubble_sort(numbers: &mut [i32]) {
-    let n = numbers.len();
+fn bubble_sort<T: Ord>(numbers: &mut [T]) {
+    let mut end = numbers.len();
 
-    for i in 0..n {
-        for j in 0..n - i - 1 {
-            if numbers[j] > numbers[j + 1] {
-                numbers.swap(j, j + 1);
+    while end > 1 {
+        let mut last_swap = 0;
+        for j in 1..end {
+            let i = j - 1;
+            if numbers[i] > numbers[j] {
+                numbers.swap(i, j);
+                last_swap = j;
             }
         }
+        end = last_swap;
     }
 }
 
@@ -27,3 +31,4 @@ fn main() {
 
     println!("Sorted numbers: {:?}", numbers);
 }
+

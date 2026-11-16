@@ -1,10 +1,11 @@
+use std::hash::{DefaultHasher, Hash, Hasher};
 use std::io;
 
-struct HashTable {
-    buckets: Vec<Vec<(i32, i32)>>,
+struct HashTable<K, V> {
+    buckets: Vec<Vec<(K, V)>>,
 }
 
-impl HashTable {
+impl<K: Eq + Hash, V> HashTable<K, V> {
     fn new() -> Self {
         let mut buckets = Vec::new();
 
@@ -15,8 +16,14 @@ impl HashTable {
         Self { buckets }
     }
 
-    fn insert(&mut self, key: i32, value: i32) {
-        let index = key.rem_euclid(10) as usize;
+    fn bucket_index(&self, key: &K) -> usize {
+        let mut hasher = DefaultHasher::new();
+        key.hash(&mut hasher);
+        (hasher.finish() % self.buckets.len() as u64) as usize
+    }
+
+    fn insert(&mut self, key: K, value: V) {
+        let index = self.bucket_index(&key);
 
         for (k, v) in &mut self.buckets[index] {
             if *k == key {
@@ -28,12 +35,12 @@ impl HashTable {
         self.buckets[index].push((key, value));
     }
 
-    fn search(&self, key: i32) -> Option<i32> {
-        let index = key.rem_euclid(10) as usize;
+    fn search(&self, key: &K) -> Option<&V> {
+        let index = self.bucket_index(key);
 
         for (k, v) in &self.buckets[index] {
-            if *k == key {
-                return Some(*v);
+            if k == key {
+                return Some(v);
             }
         }
 
@@ -71,8 +78,9 @@ fn main() {
 
     let key: i32 = input.trim().parse().unwrap();
 
-    match table.search(key) {
+    match table.search(&key) {
         Some(value) => println!("Value: {}", value),
         None => println!("Key not found"),
     }
 }
+

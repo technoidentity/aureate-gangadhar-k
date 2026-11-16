@@ -1,8 +1,8 @@
 use std::io;
 
-fn linear_search(numbers: &[i32], target: i32) -> bool {
+fn linear_search<T: PartialEq>(numbers: &[T], target: &T) -> bool {
     for num in numbers {
-        if *num == target {
+        if num == target {
             return true;
         }
     }
@@ -27,9 +27,10 @@ fn main() {
 
     let target: i32 = input.trim().parse().unwrap();
 
-    if linear_search(&numbers, target) {
+    if linear_search(&numbers, &target) {
         println!("Number found");
     } else {
         println!("Number not found");
     }
 }
+

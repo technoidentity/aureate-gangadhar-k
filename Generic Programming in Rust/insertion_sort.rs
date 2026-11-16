@@ -1,16 +1,12 @@
 use std::io;
 
-fn insertion_sort(numbers: &mut [i32]) {
+fn insertion_sort<T: Ord>(numbers: &mut [T]) {
     for i in 1..numbers.len() {
-        let current = numbers[i];
         let mut j = i;
-
-        while j > 0 && numbers[j - 1] > current {
-            numbers[j] = numbers[j - 1];
+        while j > 0 && numbers[j - 1] > numbers[j] {
+            numbers.swap(j - 1, j);
             j -= 1;
         }
-
-        numbers[j] = current;
     }
 }
 
@@ -29,3 +25,4 @@ fn main() {
 
     println!("Sorted numbers: {:?}", numbers);
 }
+

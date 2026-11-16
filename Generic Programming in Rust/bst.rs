@@ -1,12 +1,12 @@
 use std::io;
 
-struct Node {
-    data: i32,
-    left: Option<Box<Node>>,
-    right: Option<Box<Node>>,
+struct Node<T> {
+    data: T,
+    left: Option<Box<Node<T>>>,
+    right: Option<Box<Node<T>>>,
 }
 
-fn insert(root: &mut Option<Box<Node>>, value: i32) {
+fn insert<T: Ord>(root: &mut Option<Box<Node<T>>>, value: T) {
     if let Some(node) = root {
         if value < node.data {
             insert(&mut node.left, value);
@@ -22,7 +22,7 @@ fn insert(root: &mut Option<Box<Node>>, value: i32) {
     }
 }
 
-fn inorder(root: &Option<Box<Node>>) {
+fn inorder<T: std::fmt::Display>(root: &Option<Box<Node<T>>>) {
     if let Some(node) = root {
         inorder(&node.left);
         print!("{} ", node.data);
@@ -46,3 +46,4 @@ fn main() {
     inorder(&root);
     println!();
 }
+

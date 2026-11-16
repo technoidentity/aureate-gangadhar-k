@@ -1,15 +1,16 @@
 use std::io;
 
-fn binary_search(numbers: &[i32], target: i32) -> bool {
+// The input must be sorted in ascending order.
+fn binary_search<T: Ord>(numbers: &[T], target: &T) -> bool {
     let mut low = 0;
     let mut high = numbers.len();
 
     while low < high {
         let mid = low + (high - low) / 2;
 
-        if numbers[mid] == target {
+        if &numbers[mid] == target {
             return true;
-        } else if numbers[mid] < target {
+        } else if &numbers[mid] < target {
             low = mid + 1;
         } else {
             high = mid;
@@ -41,9 +42,10 @@ fn main() {
 
     let target: i32 = input.trim().parse().unwrap();
 
-    if binary_search(&numbers, target) {
+    if binary_search(&numbers, &target) {
         println!("Number found");
     } else {
         println!("Number not found");
     }
 }
+

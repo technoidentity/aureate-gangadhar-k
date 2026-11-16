@@ -1,6 +1,6 @@
 use std::io;
 
-fn quick_sort(numbers: &mut [i32]) {
+fn quick_sort<T: Ord>(numbers: &mut [T]) {
     let n = numbers.len();
 
     if n <= 1 {
@@ -38,3 +38,4 @@ fn main() {
 
     println!("Sorted numbers: {:?}", numbers);
 }
+

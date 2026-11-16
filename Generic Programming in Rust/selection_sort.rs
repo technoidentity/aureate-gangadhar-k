@@ -1,6 +1,6 @@
 use std::io;
 
-fn selection_sort(numbers: &mut [i32]) {
+fn selection_sort<T: Ord>(numbers: &mut [T]) {
     let n = numbers.len();
 
     for i in 0..n {
@@ -31,3 +31,4 @@ fn main() {
 
     println!("Sorted numbers: {:?}", numbers);
 }
+
